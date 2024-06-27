@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public Producto[] productos;
+    public Producto[] productos2;  // Segunda lista de productos
     public Transform producto1Position;
     public Transform producto2Position;
     public Text precio1Text;
     public Text precio2Text;
     public InputField inputField;
-    public GameObject notificationPanel;  //panel que se muestra cuando la respuesta es correcta o incorrecta
-    public GameObject panelLeyenda;       //panel que se muestra cuando no se ingresa ningún valor
-    public Text panelLeyendaText;         //texto dentro del panel de leyenda
+    public GameObject notificationPanel;  // Panel que se muestra cuando la respuesta es correcta o incorrecta
+    public GameObject panelLeyenda;       // Panel que se muestra cuando no se ingresa ningún valor
+    public Text panelLeyendaText;         // Texto dentro del panel de leyenda
     public Button retryButton;
     public Button exitButton;
 
@@ -28,7 +29,7 @@ public class GameController : MonoBehaviour
     public void InicializarJuego()
     {
         producto1 = Instantiate(productos[Random.Range(0, productos.Length)], producto1Position.position, Quaternion.identity);
-        producto2 = Instantiate(productos[Random.Range(0, productos.Length)], producto2Position.position, Quaternion.identity);
+        producto2 = Instantiate(productos2[Random.Range(0, productos2.Length)], producto2Position.position, Quaternion.identity);
 
         precio1Text.text = producto1.precio.ToString();
         precio2Text.text = producto2.precio.ToString();
@@ -38,8 +39,6 @@ public class GameController : MonoBehaviour
 
         notificationPanel.SetActive(false);
         panelLeyenda.SetActive(false);
-
-  
     }
 
     public void OnResponder()
