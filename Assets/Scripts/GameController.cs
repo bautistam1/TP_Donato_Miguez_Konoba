@@ -5,14 +5,15 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public Producto[] productos;  
+    public Producto[] productos;
     public Transform producto1Position;
     public Transform producto2Position;
     public Text precio1Text;
     public Text precio2Text;
     public InputField inputField;
-    public GameObject notificationPanel;
-    public Text notificationText;
+    public GameObject notificationPanel;  //panel que se muestra cuando la respuesta es correcta o incorrecta
+    public GameObject panelLeyenda;       //panel que se muestra cuando no se ingresa ningún valor
+    public Text panelLeyendaText;         //texto dentro del panel de leyenda
     public Button retryButton;
     public Button exitButton;
 
@@ -36,13 +37,14 @@ public class GameController : MonoBehaviour
         inputField.placeholder.GetComponent<Text>().text = "?";
 
         notificationPanel.SetActive(false);
+        panelLeyenda.SetActive(false);
     }
 
     public void OnResponder()
     {
         if (string.IsNullOrEmpty(inputField.text))
         {
-            MostrarNotificacion("Debes ingresar un resultado");
+            MostrarPanelLeyenda("Debes ingresar un resultado");
             return;
         }
 
@@ -52,25 +54,36 @@ public class GameController : MonoBehaviour
             int suma = producto1.precio + producto2.precio;
             if (resultado == suma)
             {
-                MostrarNotificacion("¡Correcto!");
-                retryButton.GetComponentInChildren<Text>().text = "Reiniciar el desafío";
+                MostrarNotificacion(true);
             }
             else
             {
-                MostrarNotificacion("Incorrecto. Inténtalo de nuevo.");
-                retryButton.GetComponentInChildren<Text>().text = "Volver a intentarlo";
+                MostrarNotificacion(false);
             }
         }
         else
         {
-            MostrarNotificacion("Entrada no válida. Ingresa un número.");
+            MostrarPanelLeyenda("Entrada no válida. Ingresa un número.");
         }
     }
 
-    private void MostrarNotificacion(string mensaje)
+    private void MostrarNotificacion(bool esCorrecto)
     {
-        notificationText.text = mensaje;
         notificationPanel.SetActive(true);
+        if (esCorrecto)
+        {
+            retryButton.GetComponentInChildren<Text>().text = "Reiniciar el desafío";
+        }
+        else
+        {
+            retryButton.GetComponentInChildren<Text>().text = "Volver a intentarlo";
+        }
+    }
+
+    private void MostrarPanelLeyenda(string mensaje)
+    {
+        panelLeyendaText.text = mensaje;
+        panelLeyenda.SetActive(true);
     }
 
     public void OnRetry()
