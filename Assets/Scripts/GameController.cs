@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public GameObject panel;       
     public Text panelLeyendaText;         // Texto dentro del panel de leyenda
     public Button retryButton;
+    public Button ReHacerButton;
     public Button exitButton;
 
     private Producto producto1;
@@ -56,11 +57,17 @@ public class GameController : MonoBehaviour
             int suma = producto1.precio + producto2.precio;
             if (resultado == suma)
             {
-                MostrarNotificacion(true);
+                MostrarNotificacion(true); 
+                retryButton.gameObject.SetActive(true);
+                ReHacerButton.gameObject.SetActive(false);
+
             }
             else
             {
                 MostrarNotificacion(false);
+              
+                retryButton.gameObject.SetActive(false);
+                ReHacerButton.gameObject.SetActive(true);
             }
         }
         else
@@ -103,6 +110,18 @@ public class GameController : MonoBehaviour
     {
         panelLeyenda.SetActive(false);
         panel.SetActive(true);
+    }
+    public void OnReiniciarJuego()
+    {
+        InicializarJuego();
+
+    }
+
+    public void OnVolverAInterntar()
+    {
+        notificationPanel.SetActive(false);
+        panel.SetActive(true);
+
     }
 }
 
