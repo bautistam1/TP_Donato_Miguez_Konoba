@@ -4396,7 +4396,8 @@ MonoBehaviour:
   precio2Text: {fileID: 1230759132}
   inputField: {fileID: 1678369361}
   notificationPanel: {fileID: 231775973}
-  notificationText: {fileID: 0}
+  panelLeyenda: {fileID: 595515826}
+  panelLeyendaText: {fileID: 1654971915}
   retryButton: {fileID: 1264380759}
   exitButton: {fileID: 478533283}
 --- !u!4 &1890124858
