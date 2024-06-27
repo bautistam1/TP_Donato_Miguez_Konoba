@@ -65,7 +65,6 @@ public class GameController : MonoBehaviour
             else
             {
                 MostrarNotificacion(false);
-              
                 retryButton.gameObject.SetActive(false);
                 ReHacerButton.gameObject.SetActive(true);
             }
@@ -85,7 +84,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            retryButton.GetComponentInChildren<Text>().text = "Volver a intentarlo";
+            ReHacerButton.GetComponentInChildren<Text>().text = "Volver a intentarlo";
         }
     }
 
