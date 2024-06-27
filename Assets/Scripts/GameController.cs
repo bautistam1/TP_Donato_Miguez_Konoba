@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
 
         notificationPanel.SetActive(false);
         panelLeyenda.SetActive(false);
+
+  
     }
 
     public void OnResponder()
