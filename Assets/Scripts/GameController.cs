@@ -14,6 +14,7 @@ public class GameController : MonoBehaviour
     public InputField inputField;
     public GameObject notificationPanel;  // Panel que se muestra cuando la respuesta es correcta o incorrecta
     public GameObject panelLeyenda;       // Panel que se muestra cuando no se ingresa ningún valor
+    public GameObject panel;       
     public Text panelLeyendaText;         // Texto dentro del panel de leyenda
     public Button retryButton;
     public Button exitButton;
@@ -98,4 +99,12 @@ public class GameController : MonoBehaviour
     {
         //code para cargar la escena "SeleccionarJuegos"
     }
+    public void OnCerrarPanel()
+    {
+        panelLeyenda.SetActive(false);
+        panel.SetActive(true);
+    }
 }
+
+     
+
