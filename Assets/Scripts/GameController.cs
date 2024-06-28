@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public Producto[] productos;
-    public Producto[] productos2;  // Segunda lista de productos
-    public Transform producto1Position;
-    public Transform producto2Position;
+    public GameObject[] productos;
+    public GameObject[] productos2;  // Segunda lista de productos
+    
     public Text ganastePerdisteText;
+   
     public Text precio1Text;
     public Text precio2Text;
+   
     public InputField inputField;
+    
     public GameObject notificationPanel;  // Panel que se muestra cuando la respuesta es correcta o incorrecta
     public GameObject panelLeyenda;       // Panel que se muestra cuando no se ingresa ningún valor
     public GameObject panel;       
@@ -21,8 +24,10 @@ public class GameController : MonoBehaviour
     public Button ReHacerButton;
     public Button exitButton;
 
-    private Producto producto1;
-    private Producto producto2;
+    private GameObject ProductoRandom1;
+    private GameObject ProductoRandom2;
+
+    private int precioTotal;
 
     void Start()
     {
@@ -31,11 +36,28 @@ public class GameController : MonoBehaviour
 
     public void InicializarJuego()
     {
-        producto1 = Instantiate(productos[Random.Range(0, productos.Length)], producto1Position.position, Quaternion.identity);
-        producto2 = Instantiate(productos2[Random.Range(0, productos2.Length)], producto2Position.position, Quaternion.identity);
+        DeactivateAll();
+        DeactivateAll2();
 
-        precio1Text.text = producto1.precio.ToString();
-        precio2Text.text = producto2.precio.ToString();
+        int randomIndex1 = Random.Range(0, productos.Length);
+        int randomIndex2 = Random.Range(0, productos2.Length);
+
+        ProductoRandom1 = productos[randomIndex1];
+        ProductoRandom2 = productos2[randomIndex2];
+
+        ProductoRandom1.SetActive(true);
+        ProductoRandom2.SetActive(true);
+
+        Producto producto1Script = ProductoRandom1.GetComponent<Producto>();
+        Producto producto2Script = ProductoRandom2.GetComponent<Producto>();
+
+
+        int precio1 = producto1Script.precio;
+        int precio2 = producto2Script.precio;
+        precioTotal = precio1 + precio2;
+
+        precio1Text.text = precio1.ToString();
+        precio2Text.text = precio2.ToString();
 
         inputField.text = "";
         inputField.placeholder.GetComponent<Text>().text = "?";
@@ -55,15 +77,15 @@ public class GameController : MonoBehaviour
         int resultado;
         if (int.TryParse(inputField.text, out resultado))
         {
-            int suma = producto1.precio + producto2.precio;
+            int suma = precioTotal;
             if (resultado == suma)
             {
                 MostrarNotificacion(true); 
                 retryButton.gameObject.SetActive(true);
                 ReHacerButton.gameObject.SetActive(false);
                 ganastePerdisteText.GetComponentInChildren<Text>().text = "¡Ganaste!";
-                producto1.gameObject.SetActive(false);
-                producto2.gameObject.SetActive(false);
+                ProductoRandom1.gameObject.SetActive(false);
+                ProductoRandom2.gameObject.SetActive(false);
 
             }
             else
@@ -72,7 +94,6 @@ public class GameController : MonoBehaviour
                 retryButton.gameObject.SetActive(false);
                 ReHacerButton.gameObject.SetActive(true);
                 ganastePerdisteText.GetComponentInChildren<Text>().text = "¡Perdiste!";
-                
             }
         }
         else
@@ -102,8 +123,8 @@ public class GameController : MonoBehaviour
 
     public void OnRetry()
     {
-        Destroy(producto1.gameObject);
-        Destroy(producto2.gameObject);
+        Destroy(ProductoRandom1.gameObject);
+        Destroy(ProductoRandom2.gameObject);
         InicializarJuego();
     }
 
@@ -127,6 +148,22 @@ public class GameController : MonoBehaviour
         notificationPanel.SetActive(false);
         panel.SetActive(true);
 
+    }
+
+    void DeactivateAll()
+    {
+        for (int i = 0; i < productos.Length; i++)
+        {
+            productos[i].SetActive(false);
+        }
+    }
+
+    void DeactivateAll2()
+    {
+        for (int i = 0; i < productos2.Length; i++)
+        {
+            productos2[i].SetActive(false);
+        }
     }
 }
 
