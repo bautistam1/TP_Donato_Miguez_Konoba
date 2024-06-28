@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public Producto[] productos2;  // Segunda lista de productos
     public Transform producto1Position;
     public Transform producto2Position;
+    public Text ganastePerdisteText;
     public Text precio1Text;
     public Text precio2Text;
     public InputField inputField;
@@ -60,6 +61,9 @@ public class GameController : MonoBehaviour
                 MostrarNotificacion(true); 
                 retryButton.gameObject.SetActive(true);
                 ReHacerButton.gameObject.SetActive(false);
+                ganastePerdisteText.GetComponentInChildren<Text>().text = "¡Ganaste!";
+                producto1.gameObject.SetActive(false);
+                producto2.gameObject.SetActive(false);
 
             }
             else
@@ -67,6 +71,8 @@ public class GameController : MonoBehaviour
                 MostrarNotificacion(false);
                 retryButton.gameObject.SetActive(false);
                 ReHacerButton.gameObject.SetActive(true);
+                ganastePerdisteText.GetComponentInChildren<Text>().text = "¡Perdiste!";
+                
             }
         }
         else
